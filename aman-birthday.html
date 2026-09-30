@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Aman - Booyah Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0b1024; --bg2:#151b3d; --fire:#ff6a00; --gold:#ffd23f; --teal:#2de2c5;
+  --red:#ff3d54; --blue:#3c8dff; --ink:#f4f6ff; --muted:#aab2dc; --panel:rgba(18,24,58,.82);
+  --display:"Bungee","Impact","Arial Black",sans-serif;
+  --body:"Rajdhani","Segoe UI",Roboto,Arial,sans-serif;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*,*::before,*::after{box-sizing:border-box;}
+body{
+  margin:0; min-height:100vh; overflow-x:hidden;
+  background:radial-gradient(120% 80% at 50% 0%,var(--bg2) 0%,var(--bg) 60%);
+  background-color:var(--bg);
+  color:var(--ink); font-family:var(--body); font-weight:500; font-size:1.12rem; line-height:1.5;
+}
+h1,h2,h3,p{margin:0;}
+
+/* ============ PAGE SWITCH (pure CSS radios) ============ */
+.sr{position:absolute;opacity:0;pointer-events:none;}
+.page{display:none;animation:enter .55s cubic-bezier(.2,.9,.3,1.2);}
+#pg1:checked ~ main .p1,
+#pg2:checked ~ main .p2{display:block;}
+@keyframes enter{from{opacity:0;transform:translateY(18px) scale(.98);}to{opacity:1;transform:none;}}
+
+.tabs{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  display:flex; gap:8px; justify-content:center; padding:10px 12px;
+  background:rgba(11,16,36,.88); backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.tabs label{
+  font-family:var(--display); font-size:.85rem; letter-spacing:.04em;
+  padding:.55em 1.1em; border-radius:999px; cursor:pointer;
+  border:2px solid rgba(255,255,255,.22); color:var(--ink);
+  transition:background .2s,color .2s,transform .2s;
+}
+.tabs label:hover{transform:translateY(-2px);}
+#pg1:checked ~ .tabs label[for="pg1"],
+#pg2:checked ~ .tabs label[for="pg2"]{background:var(--fire);border-color:var(--fire);color:#150800;}
+#pg1:focus-visible ~ .tabs label[for="pg1"],
+#pg2:focus-visible ~ .tabs label[for="pg2"]{outline:3px solid var(--gold);outline-offset:3px;}
+
+main{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:12px 16px 56px;}
+
+/* ============ BACKGROUND FX (fixed, both pages) ============ */
+.fx{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.grid{position:absolute;inset:-50% -10% 0;
+  background:
+    linear-gradient(rgba(255,106,0,.08) 1px,transparent 1px) 0 0/48px 48px,
+    linear-gradient(90deg,rgba(255,106,0,.08) 1px,transparent 1px) 0 0/48px 48px;
+  transform:perspective(500px) rotateX(58deg); transform-origin:bottom; animation:gridmove 4s linear infinite;}
+@keyframes gridmove{to{background-position:0 48px,0 0;}}
+
+.bt{position:absolute;left:-200px;width:150px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),#fff);
+  box-shadow:0 0 10px var(--fire);opacity:.85;
+  transform:rotate(var(--r,0deg));animation:tracer var(--d,2.4s) linear infinite;animation-delay:var(--l,0s);}
+@keyframes tracer{from{transform:rotate(var(--r,0deg)) translateX(0);}to{transform:rotate(var(--r,0deg)) translateX(calc(100vw + 400px));}}
+
+.em{position:absolute;bottom:-12px;left:var(--x);width:5px;height:5px;border-radius:50%;
+  background:var(--fire);box-shadow:0 0 8px var(--fire);opacity:.9;animation:rise var(--d,8s) linear infinite;animation-delay:var(--l,0s);}
+@keyframes rise{to{transform:translate(24px,-110vh);opacity:0;}}
+
+.cf{position:absolute;top:-24px;left:var(--x);width:8px;height:14px;background:var(--c);border-radius:2px;
+  animation:fall var(--d,9s) linear infinite;animation-delay:var(--l,0s);}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg);}}
+
+/* ============ PAGE 1: HERO ============ */
+.hero{position:relative;display:grid;place-items:center;text-align:center;min-height:360px;padding:2.2rem 0 1rem;}
+.crosshair{position:absolute;left:50%;top:50%;width:min(86vw,430px);aspect-ratio:1;margin:calc(min(86vw,430px) / -2) 0 0 calc(min(86vw,430px) / -2);
+  border-radius:50%;border:2px dashed rgba(255,106,0,.55);animation:spin 16s linear infinite;}
+.crosshair::before{content:"";position:absolute;inset:14%;border-radius:50%;border:2px solid rgba(45,226,197,.45);}
+.crosshair i{position:absolute;background:var(--fire);box-shadow:0 0 10px var(--fire);}
+.crosshair i:nth-child(1){left:50%;top:-14px;width:3px;height:28px;}
+.crosshair i:nth-child(2){left:50%;bottom:-14px;width:3px;height:28px;}
+.crosshair i:nth-child(3){top:50%;left:-14px;height:3px;width:28px;}
+.crosshair i:nth-child(4){top:50%;right:-14px;height:3px;width:28px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.dot{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--red);animation:ping 1.4s ease-out infinite;}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,61,84,.9);}100%{box-shadow:0 0 0 46px rgba(255,61,84,0);}}
+
+.hb{position:relative;font-family:var(--display);font-size:clamp(1.1rem,5.2vw,2rem);letter-spacing:.06em;color:var(--ink);}
+.hb .w{display:inline-block;margin:0 .35em;}
+.hb span.l{display:inline-block;animation:hop 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * .09s);}
+@keyframes hop{0%,55%,100%{transform:translateY(0);}25%{transform:translateY(-12px);color:var(--gold);}}
+
+.name{position:relative;font-family:var(--display);font-weight:400;font-size:clamp(4.6rem,23vw,9.5rem);line-height:1;color:var(--gold);
+  text-shadow:0 0 34px rgba(255,106,0,.75),0 7px 0 #c24500;animation:throb 2.2s ease-in-out infinite;}
+.name::before,.name::after{content:attr(data-t);position:absolute;inset:0;overflow:hidden;text-shadow:none;}
+.name::before{color:var(--teal);animation:gl1 3.2s steps(1) infinite;}
+.name::after{color:var(--red);animation:gl2 3.2s steps(1) infinite;}
+@keyframes throb{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+@keyframes gl1{0%,88%,100%{clip-path:inset(0 0 100% 0);transform:none;}90%{clip-path:inset(20% 0 55% 0);transform:translateX(-6px);}94%{clip-path:inset(60% 0 12% 0);transform:translateX(5px);}}
+@keyframes gl2{0%,89%,100%{clip-path:inset(0 0 100% 0);transform:none;}92%{clip-path:inset(40% 0 30% 0);transform:translateX(6px);}96%{clip-path:inset(10% 0 70% 0);transform:translateX(-5px);}}
+
+.sub{margin-top:.6rem;font-size:1.25rem;color:var(--muted);font-weight:700;}
+.booyah{position:absolute;right:2%;bottom:4%;font-family:var(--display);font-size:clamp(1.3rem,6vw,2.2rem);color:var(--red);
+  border:4px solid var(--red);border-radius:8px;padding:.1em .5em;background:rgba(11,16,36,.7);transform:rotate(-10deg);opacity:0;animation:stamp 3.6s ease-in infinite;}
+@keyframes stamp{
+  0%,62%{opacity:0;transform:rotate(-10deg) scale(2.6);}
+  70%{opacity:1;transform:rotate(-10deg) scale(.92);}
+  74%,92%{opacity:1;transform:rotate(-10deg) scale(1);}
+  100%{opacity:0;transform:rotate(-10deg) scale(1);}
+}
+
+/* ============ SHOOTING RANGE (gun animation) ============ */
+.range{position:relative;display:flex;align-items:center;font-size:clamp(9px,2.5vw,14px);height:9em;margin:1.4rem 0;padding:0 .5em;
+  border-top:1px dashed rgba(255,255,255,.15);border-bottom:1px dashed rgba(255,255,255,.15);}
+.gun{position:relative;width:20em;height:7em;flex:none;animation:recoil .24s ease-out infinite;}
+.gun b{position:absolute;display:block;}
+.stock{left:0;top:2.2em;width:4.5em;height:2.4em;background:#4a3320;border-radius:.4em 0 0 .8em;}
+.gbody{left:4em;top:1.8em;width:8.5em;height:2.4em;background:#5d6474;border-radius:.3em;box-shadow:inset 0 -.5em 0 rgba(0,0,0,.25);}
+.scope{left:7em;top:.6em;width:3.4em;height:1.1em;background:#20243a;border-radius:.4em;}
+.scope::after{content:"";position:absolute;right:.3em;top:.3em;width:.5em;height:.5em;border-radius:50%;background:var(--red);box-shadow:0 0 .6em var(--red);}
+.barrel{left:12.4em;top:2.3em;width:6.5em;height:.9em;background:#242838;}
+.muzzle{left:18.9em;top:2.1em;width:.9em;height:1.3em;background:#0d0f1a;border-radius:.2em;}
+.mag{left:8em;top:4em;width:1.8em;height:3em;background:var(--fire);transform:rotate(8deg);border-radius:.2em;}
+.grip{left:5.6em;top:4em;width:1.4em;height:2.5em;background:#1c1f30;transform:rotate(-12deg);border-radius:.3em;}
+.shell{left:10em;top:1.7em;width:.6em;height:.3em;background:var(--gold);border-radius:.1em;opacity:0;animation:eject .48s linear infinite;}
+.shell.s2{animation-delay:.24s;}
+@keyframes recoil{0%{transform:translateX(0) rotate(0);}20%{transform:translateX(-.45em) rotate(-1.4deg);}100%{transform:translateX(0) rotate(0);}}
+@keyframes eject{0%{opacity:1;transform:translate(0,0) rotate(0);}60%{opacity:1;transform:translate(-1.6em,-3em) rotate(300deg);}100%{opacity:0;transform:translate(-3em,1.6em) rotate(600deg);}}
+
+.lane{position:relative;flex:1;height:7em;}
+.flash{position:absolute;left:-2.4em;top:.9em;width:4em;height:4em;
+  background:radial-gradient(circle,#fff 0 18%,var(--gold) 34%,var(--fire) 62%,transparent 70%);
+  clip-path:polygon(50% 0,60% 35%,100% 20%,72% 50%,100% 80%,60% 65%,50% 100%,40% 65%,0 80%,28% 50%,0 20%,40% 35%);
+  animation:flash .12s steps(2) infinite;}
+@keyframes flash{0%{transform:scale(1) rotate(0);}50%{transform:scale(.6) rotate(28deg);opacity:.75;}100%{transform:scale(1.05) rotate(-12deg);}}
+.bullet{position:absolute;top:2.55em;left:0;width:2.6em;height:.32em;border-radius:1em;
+  background:linear-gradient(90deg,transparent,var(--gold),#fff);box-shadow:0 0 .8em var(--fire);opacity:0;animation:shoot .6s linear infinite;}
+.bullet:nth-of-type(2){animation-delay:.12s;}
+.bullet:nth-of-type(3){animation-delay:.24s;}
+.bullet:nth-of-type(4){animation-delay:.36s;}
+.bullet:nth-of-type(5){animation-delay:.48s;}
+@keyframes shoot{0%{left:0;opacity:1;}90%{opacity:1;}100%{left:calc(100% - 2.6em);opacity:0;}}
+
+.target{position:relative;flex:none;width:6.4em;height:6.4em;border-radius:50%;
+  background:radial-gradient(circle,var(--red) 0 12%,#fff 12% 26%,var(--red) 26% 42%,#fff 42% 58%,var(--red) 58% 74%,#fff 74% 100%);
+  box-shadow:0 0 1.4em rgba(255,61,84,.5);animation:tshake .24s linear infinite;}
+@keyframes tshake{0%,100%{transform:translateX(0);}25%{transform:translateX(.3em) rotate(2deg);}75%{transform:translateX(-.2em) rotate(-2deg);}}
+.hit{position:absolute;right:.5em;top:-.6em;font-family:var(--display);font-size:1.7em;color:var(--gold);text-shadow:0 0 .5em var(--fire);opacity:0;animation:hit 2s ease-out infinite;}
+@keyframes hit{0%{opacity:0;transform:translateY(1.2em) scale(.6);}20%{opacity:1;transform:translateY(0) scale(1.15);}70%{opacity:1;}100%{opacity:0;transform:translateY(-1.6em) scale(1);}}
+
+/* ============ CAKE + WISH ============ */
+.wish{display:flex;flex-wrap:wrap;gap:1.6rem 2.2rem;align-items:center;justify-content:center;margin-bottom:1.6rem;}
+.cake{position:relative;width:160px;height:150px;flex:none;margin-top:14px;}
+.cake .plate{position:absolute;bottom:0;left:-16px;width:192px;height:14px;background:#cfd6ff;border-radius:50%;}
+.cake .t1{position:absolute;bottom:10px;left:0;width:160px;height:48px;border-radius:12px;background:var(--fire);box-shadow:inset 0 -10px 0 rgba(0,0,0,.15);}
+.cake .t2{position:absolute;bottom:54px;left:20px;width:120px;height:42px;border-radius:12px;background:#ff5c8a;
+  background-image:radial-gradient(circle at 10px 0,#fff 9px,transparent 10px);background-size:20px 20px;background-repeat:repeat-x;}
+.cake .c{position:absolute;bottom:94px;width:9px;height:34px;background:repeating-linear-gradient(45deg,#fff 0 5px,var(--teal) 5px 10px);border-radius:2px;}
+.cake .c:nth-child(1){left:48px;}.cake .c:nth-child(2){left:76px;}.cake .c:nth-child(3){left:104px;}
+.cake .c u{position:absolute;left:-1px;top:-17px;width:11px;height:17px;background:radial-gradient(circle at 50% 70%,#fff 0 20%,var(--gold) 40%,var(--fire) 100%);
+  border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;box-shadow:0 0 14px var(--gold);transform-origin:50% 100%;animation:flick .28s ease-in-out infinite alternate;}
+.cake .c:nth-child(2) u{animation-delay:.09s;}.cake .c:nth-child(3) u{animation-delay:.18s;}
+@keyframes flick{from{transform:scale(1,1) rotate(-6deg);}to{transform:scale(.85,1.15) rotate(6deg);}}
+
+.hud{position:relative;background:var(--panel);border-left:5px solid var(--fire);padding:1.2rem 1.4rem;
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));}
+.hud h2{font-family:var(--display);font-weight:400;font-size:clamp(1.15rem,4.2vw,1.6rem);color:var(--gold);margin-bottom:.4rem;}
+.wish .hud{flex:1 1 300px;max-width:520px;}
+
+.bars{display:grid;gap:.7rem;margin:1rem 0 .2rem;}
+.bar{display:grid;grid-template-columns:104px 1fr;align-items:center;gap:.8rem;font-weight:700;color:var(--muted);}
+.track{height:16px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden;transform:skewX(-14deg);}
+.fill{display:block;height:100%;border-radius:4px;}
+.stress{background:linear-gradient(90deg,var(--red),#ff8a5b);animation:stress 5s ease-in-out infinite alternate;}
+.focus{background:linear-gradient(90deg,var(--blue),var(--teal));animation:focus 5s ease-in-out infinite alternate;}
+.conf{background:linear-gradient(90deg,var(--fire),var(--gold));animation:conf 5s ease-in-out infinite alternate;}
+@keyframes stress{from{width:92%;}to{width:16%;}}
+@keyframes focus{from{width:24%;}to{width:94%;}}
+@keyframes conf{from{width:12%;}to{width:100%;}}
+
+.loot{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.4rem 1rem;margin:2rem 0 1.4rem;}
+.crate{position:relative;text-align:center;padding-top:46px;animation:sway 3.2s ease-in-out infinite alternate;animation-delay:var(--l,0s);}
+.crate::before{content:"";position:absolute;left:50%;top:0;width:88px;height:40px;margin-left:-44px;border-radius:88px 88px 0 0;
+  background:repeating-linear-gradient(90deg,var(--fire) 0 14px,#fff 14px 28px);}
+.crate::after{content:"";position:absolute;left:50%;top:38px;width:60px;height:14px;margin-left:-30px;background:rgba(255,255,255,.28);clip-path:polygon(0 0,100% 0,62% 100%,38% 100%);}
+.crate div{margin-top:12px;background:#1f2760;border:3px solid var(--gold);border-radius:8px;padding:.7rem .6rem;box-shadow:0 0 18px rgba(255,210,63,.25);}
+.crate strong{display:block;font-family:var(--display);font-weight:400;font-size:.95rem;color:var(--gold);}
+.crate span{font-size:1rem;color:var(--muted);}
+@keyframes sway{from{transform:translateY(-8px) rotate(-3deg);}to{transform:translateY(8px) rotate(3deg);}}
+
+.btnrow{display:flex;justify-content:center;margin-top:1.6rem;}
+.btn{display:inline-block;cursor:pointer;font-family:var(--display);font-size:1rem;color:#150800;background:var(--gold);
+  padding:.9em 1.8em;border-radius:10px;box-shadow:0 6px 0 #b8860b;position:relative;animation:nudge 1.6s ease-in-out infinite;transition:transform .1s,box-shadow .1s;}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #b8860b;}
+@keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
+
+/* ============ PAGE 2 ============ */
+.title{font-family:var(--display);font-weight:400;text-align:center;font-size:clamp(1.8rem,8vw,3.6rem);color:var(--gold);
+  text-shadow:0 0 26px rgba(255,106,0,.7),0 5px 0 #c24500;margin-top:1.4rem;animation:throb 2.6s ease-in-out infinite;}
+.lead{text-align:center;color:var(--muted);font-size:1.2rem;font-weight:700;margin:.6rem auto 1.4rem;max-width:34em;}
+
+.scene{position:relative;height:380px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,255,255,.14);
+  background:linear-gradient(#050818 0%,#141a4a 62%,#2a2a6a 100%);}
+.stars{position:absolute;left:0;top:0;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle 3s ease-in-out infinite;
+  box-shadow:34px 42px #fff,88px 18px #fff,140px 70px #fff,210px 30px #fff,268px 88px #fff,320px 22px #fff,380px 64px #fff,440px 34px #fff,495px 80px #fff,560px 26px #fff,610px 58px #fff,72px 96px #fff,188px 108px #fff,350px 104px #fff,520px 112px #fff,700px 40px #fff,780px 76px #fff,860px 24px #fff;}
+.stars.b{animation-delay:1.5s;transform:translate(18px,20px);}
+@keyframes twinkle{0%,100%{opacity:1;}50%{opacity:.25;}}
+.moon{position:absolute;left:8%;top:14px;width:44px;height:44px;border-radius:50%;background:#fff6cc;box-shadow:0 0 30px rgba(255,246,204,.7),inset -10px -4px 0 #d9cf94;animation:glow 4s ease-in-out infinite alternate;}
+@keyframes glow{to{box-shadow:0 0 48px rgba(255,246,204,.95),inset -10px -4px 0 #d9cf94;}}
+.cloud{position:absolute;top:50px;left:-90px;width:80px;height:20px;border-radius:20px;background:rgba(190,200,255,.22);animation:drift 22s linear infinite;}
+.cloud::before{content:"";position:absolute;left:14px;top:-10px;width:36px;height:24px;border-radius:50%;background:inherit;}
+@keyframes drift{to{transform:translateX(calc(100vw + 200px));}}
+
+.feed{position:absolute;right:10px;top:12px;width:170px;font-size:.82rem;font-weight:700;display:grid;gap:4px;z-index:6;}
+.feed span{background:rgba(0,0,0,.55);border-left:3px solid var(--red);padding:2px 8px;border-radius:3px;opacity:0;animation:feed 6s ease-out infinite;}
+.feed span:nth-child(2){animation-delay:1.6s;border-color:var(--gold);}
+.feed span:nth-child(3){animation-delay:3.2s;border-color:var(--teal);}
+@keyframes feed{0%{opacity:0;transform:translateX(24px);}8%{opacity:1;transform:none;}45%{opacity:1;}55%,100%{opacity:0;}}
+
+.badge3{position:absolute;left:12px;top:66px;width:96px;font-size:.78rem;font-weight:700;line-height:1.2;color:var(--gold);z-index:6;animation:bounce 1.1s ease-in-out infinite;}
+.badge3::after{content:"";display:block;margin:4px 0 0 20px;width:0;height:0;border:8px solid transparent;border-top-color:var(--gold);}
+@keyframes bounce{50%{transform:translateY(8px);}}
+
+.house{position:absolute;left:50%;bottom:0;width:min(88%,520px);transform:translateX(-50%);}
+.slab{height:10px;background:#3d4699;}
+.parapet{position:absolute;left:0;right:0;top:-14px;height:14px;z-index:4;background:repeating-linear-gradient(90deg,#4f59b0 0 3px,transparent 3px 14px);border-top:3px solid #4f59b0;}
+.floor{position:relative;height:64px;display:flex;justify-content:space-around;align-items:center;background:#1d2456;
+  border-left:3px solid #2f3878;border-right:3px solid #2f3878;border-bottom:3px solid #121740;}
+.floor.f3{background:#272f6b;box-shadow:inset 0 0 40px rgba(255,210,63,.2);}
+.w{display:block;width:34px;height:34px;border-radius:4px;background:var(--gold);box-shadow:0 0 12px rgba(255,210,63,.6);animation:blink 6s infinite;animation-delay:calc(var(--k,0) * .8s);}
+@keyframes blink{0%,90%,100%{opacity:1;}93%{opacity:.2;}96%{opacity:1;}}
+.door{display:block;width:32px;height:48px;background:#7a3b12;border-radius:4px 4px 0 0;align-self:flex-end;}
+
+.crew{position:absolute;left:50%;bottom:202px;transform:translateX(-50%);display:flex;gap:14px;z-index:3;}
+.pl{position:relative;width:36px;height:74px;animation:bob .5s ease-in-out infinite alternate;}
+.pl.me{animation-delay:.25s;}
+@keyframes bob{to{transform:translateY(-3px);}}
+.aman{--hc:var(--fire);}
+.me{--hc:var(--blue);}
+.pl .tag{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:.7rem;color:var(--hc);white-space:nowrap;text-shadow:0 0 8px rgba(0,0,0,.8);}
+.pl .head{position:absolute;left:9px;top:0;width:18px;height:18px;border-radius:50%;background:#f2b880;}
+.pl .head::before{content:"";position:absolute;left:-1px;top:-3px;width:20px;height:11px;border-radius:10px 10px 2px 2px;background:var(--hc);}
+.pl .torso{position:absolute;left:6px;top:19px;width:24px;height:30px;border-radius:6px;background:var(--hc);}
+.pl .legs{position:absolute;left:8px;top:49px;width:20px;height:25px;background:linear-gradient(90deg,#171c46 0 45%,transparent 45% 55%,#171c46 55%);}
+.pl .phone{position:absolute;top:28px;width:24px;height:11px;border-radius:3px;background:#0b0e20;border:1px solid #7b84c8;box-shadow:0 0 8px var(--teal);animation:tap .3s steps(2) infinite;}
+.aman .phone{left:22px;}
+.me .phone{left:-10px;}
+@keyframes tap{50%{box-shadow:0 0 14px var(--gold);}}
+.pl .muz{position:absolute;top:22px;width:22px;height:22px;background:radial-gradient(circle,#fff 0 20%,var(--gold) 40%,var(--fire) 70%);
+  clip-path:polygon(50% 0,60% 35%,100% 20%,72% 50%,100% 80%,60% 65%,50% 100%,40% 65%,0 80%,28% 50%,0 20%,40% 35%);animation:flash .15s steps(2) infinite;}
+.aman .muz{left:44px;}
+.me .muz{left:-30px;}
+.pl .tr{position:absolute;top:32px;width:28px;height:3px;border-radius:3px;box-shadow:0 0 8px var(--fire);opacity:0;}
+.aman .tr{left:56px;background:linear-gradient(270deg,transparent,var(--gold),#fff);animation:shootR .7s linear infinite;}
+.me .tr{left:-58px;background:linear-gradient(90deg,transparent,var(--teal),#fff);box-shadow:0 0 8px var(--teal);animation:shootL .7s linear infinite;}
+.pl .tr.t2{animation-delay:.23s;}
+.pl .tr.t3{animation-delay:.46s;}
+@keyframes shootR{0%{opacity:1;transform:translateX(0);}100%{opacity:0;transform:translateX(300px);}}
+@keyframes shootL{0%{opacity:1;transform:translateX(0);}100%{opacity:0;transform:translateX(-300px);}}
+
+/* timeline 6 to 9 */
+.block{margin-top:1.8rem;}
+.block h3{font-family:var(--display);font-weight:400;font-size:clamp(1.1rem,4vw,1.5rem);color:var(--gold);margin-bottom:.5rem;}
+.clockrow{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.clock{display:grid;font-family:var(--display);font-size:clamp(2rem,9vw,3.2rem);color:var(--teal);text-shadow:0 0 20px rgba(45,226,197,.7);min-width:5.4em;}
+.clock span{grid-area:1/1;opacity:0;animation:tick 8s infinite;}
+.clock span:nth-child(2){animation-delay:2s;}
+.clock span:nth-child(3){animation-delay:4s;}
+.clock span:nth-child(4){animation-delay:6s;}
+@keyframes tick{0%{opacity:1;transform:scale(1.14);}6%{transform:scale(1);}24%{opacity:1;}25%,100%{opacity:0;}}
+.rail{position:relative;flex:1 1 220px;height:10px;border-radius:6px;background:rgba(255,255,255,.12);margin:1.2rem 12px;}
+.prog{position:absolute;left:0;top:0;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--fire),var(--gold));box-shadow:0 0 12px var(--fire);animation:fill 8s linear infinite;}
+@keyframes fill{from{width:0;}to{width:100%;}}
+.n{position:absolute;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#2a3266;border:3px solid #0b1024;}
+.n1{left:0;animation:lit1 8s infinite;}
+.n2{left:33.33%;animation:lit2 8s infinite;}
+.n3{left:66.66%;animation:lit3 8s infinite;}
+.n4{left:100%;animation:lit4 8s infinite;}
+@keyframes lit1{0%{background:#2a3266;}1%,92%{background:var(--gold);box-shadow:0 0 14px var(--gold);}100%{background:#2a3266;box-shadow:none;}}
+@keyframes lit2{0%,32%{background:#2a3266;}34%,92%{background:var(--gold);box-shadow:0 0 14px var(--gold);}100%{background:#2a3266;box-shadow:none;}}
+@keyframes lit3{0%,65%{background:#2a3266;}67%,92%{background:var(--gold);box-shadow:0 0 14px var(--gold);}100%{background:#2a3266;box-shadow:none;}}
+@keyframes lit4{0%,96%{background:#2a3266;}98%,100%{background:var(--red);box-shadow:0 0 16px var(--red);}}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;}
+.steps li{padding:.6rem .8rem;border-left:3px solid var(--fire);background:rgba(255,255,255,.05);font-size:1.02rem;}
+.steps b{display:block;font-family:var(--display);font-weight:400;font-size:.9rem;color:var(--gold);}
+
+/* Maggie war */
+.arena{position:relative;display:flex;justify-content:center;align-items:center;gap:32px;padding:3.2rem 0 1.6rem;animation:tug 1s ease-in-out infinite;}
+@keyframes tug{0%,100%{transform:translateX(-14px);}50%{transform:translateX(14px);}}
+.fighter{position:relative;flex:none;width:68px;height:68px;border-radius:50%;background:#f2b880;display:grid;place-items:center;font-size:2rem;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12);}
+.fighter em{position:absolute;bottom:-1.5rem;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--display);font-size:.72rem;color:var(--muted);}
+.fighter::after{content:"";position:absolute;top:50%;width:52px;height:11px;margin-top:-5px;border-radius:11px;background:#e8a56a;}
+.fighter.L{animation:leanL 1s ease-in-out infinite;}
+.fighter.L::after{left:calc(100% - 8px);}
+.fighter.R{animation:leanR 1s ease-in-out infinite;}
+.fighter.R::after{right:calc(100% - 8px);}
+.fighter.L{border:4px solid var(--fire);}
+.fighter.R{border:4px solid var(--blue);}
+@keyframes leanL{0%,100%{transform:rotate(-10deg);}50%{transform:rotate(8deg);}}
+@keyframes leanR{0%,100%{transform:rotate(10deg);}50%{transform:rotate(-8deg);}}
+.pack{position:relative;flex:none;width:100px;height:130px;border-radius:8px;text-align:center;padding-top:16px;
+  background:linear-gradient(180deg,var(--gold) 0 62%,var(--red) 62% 100%);color:#7a0d1c;box-shadow:0 0 22px rgba(255,210,63,.45);
+  clip-path:polygon(0 8px,8% 0,16% 8px,24% 0,32% 8px,40% 0,48% 8px,56% 0,64% 8px,72% 0,80% 8px,88% 0,96% 8px,100% 0,100% 100%,0 100%);
+  animation:wob .5s ease-in-out infinite alternate;}
+.pack b{display:block;font-family:var(--display);font-weight:400;font-size:1.25rem;margin-top:8px;}
+.pack small{display:block;font-weight:700;font-size:.78rem;color:#fff;margin-top:52px;}
+@keyframes wob{from{transform:rotate(-6deg);}to{transform:rotate(6deg);}}
+.pow{position:absolute;font-family:var(--display);font-size:1rem;color:#210800;padding:1.1em 1em;opacity:0;
+  background:radial-gradient(circle,var(--gold),var(--fire));
+  clip-path:polygon(50% 0,61% 30%,95% 15%,74% 45%,100% 60%,68% 68%,80% 100%,50% 78%,20% 100%,32% 68%,0 60%,26% 45%,5% 15%,39% 30%);
+  animation:pow 1.5s ease-out infinite;}
+.pow.p1{left:14%;top:6px;}
+.pow.p2{right:12%;top:0;animation-delay:.5s;}
+.pow.p3{left:44%;bottom:-4px;animation-delay:1s;}
+@keyframes pow{0%{opacity:0;transform:scale(.3) rotate(-15deg);}12%{opacity:1;transform:scale(1.2) rotate(6deg);}32%{opacity:1;transform:scale(1) rotate(0);}45%,100%{opacity:0;transform:scale(1.4);}}
+.steam{position:absolute;top:22px;left:50%;width:12px;height:30px;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(5px);animation:steam 2.2s ease-out infinite;}
+.steam.s2{margin-left:-24px;animation-delay:.7s;}
+.steam.s3{margin-left:22px;animation-delay:1.4s;}
+@keyframes steam{0%{opacity:0;transform:translateY(20px) scale(.6);}30%{opacity:.7;}100%{opacity:0;transform:translateY(-34px) scale(1.5);}}
+.cap{text-align:center;max-width:32em;margin:.4rem auto 0;color:var(--muted);}
+
+/* final card */
+.final{position:relative;margin-top:2rem;text-align:center;padding:2.2rem 1.4rem 1.6rem;border-left:0;border-top:5px solid var(--fire);}
+.final h2{font-size:clamp(1.5rem,6.4vw,2.6rem);}
+.final p{max-width:34em;margin:.9rem auto 0;}
+.sign{font-family:var(--display);color:var(--teal);margin-top:1.2rem !important;}
+.burst{position:absolute;width:6px;height:6px;border-radius:50%;opacity:0;
+  box-shadow:0 -30px var(--gold),21px -21px var(--fire),30px 0 var(--teal),21px 21px var(--gold),0 30px var(--fire),-21px 21px var(--teal),-30px 0 var(--gold),-21px -21px var(--fire);
+  animation:burst 2.6s ease-out infinite;}
+.burst.b1{left:10%;top:22%;}
+.burst.b2{right:10%;top:16%;animation-delay:.9s;}
+.burst.b3{left:48%;top:4%;animation-delay:1.7s;}
+@keyframes burst{0%{transform:scale(.1);opacity:1;}70%{opacity:1;}100%{transform:scale(2.6);opacity:0;}}
+
+@media (max-width:520px){
+  .bar{grid-template-columns:86px 1fr;}
+  .arena{gap:26px;}
+  .feed{width:150px;font-size:.74rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;}
+}
+</style>
+</head>
+<body>
+
+<input class="sr" type="radio" name="pg" id="pg1" checked aria-label="Page 1: Birthday">
+<input class="sr" type="radio" name="pg" id="pg2" aria-label="Page 2: Rooftop squad">
+
+<!-- Background effects: grid floor, bullet tracers, embers, confetti -->
+<div class="fx" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="bt" style="top:12%;--d:2.2s;--l:0s"></div>
+  <div class="bt" style="top:26%;--d:3s;--l:-1s;--r:4deg"></div>
+  <div class="bt" style="top:41%;--d:2.6s;--l:-.4s"></div>
+  <div class="bt" style="top:55%;--d:3.4s;--l:-2s;--r:-5deg"></div>
+  <div class="bt" style="top:70%;--d:2.4s;--l:-1.4s"></div>
+  <div class="bt" style="top:84%;--d:3.1s;--l:-.8s;--r:3deg"></div>
+  <div class="em" style="--x:8%;--d:9s;--l:-1s"></div>
+  <div class="em" style="--x:19%;--d:11s;--l:-6s"></div>
+  <div class="em" style="--x:31%;--d:8s;--l:-3s"></div>
+  <div class="em" style="--x:44%;--d:12s;--l:-8s"></div>
+  <div class="em" style="--x:57%;--d:9.5s;--l:-2s"></div>
+  <div class="em" style="--x:68%;--d:10s;--l:-5s"></div>
+  <div class="em" style="--x:79%;--d:8.5s;--l:-7s"></div>
+  <div class="em" style="--x:91%;--d:11.5s;--l:-4s"></div>
+  <div class="cf" style="--x:5%;--c:#ffd23f;--d:9s;--l:-2s"></div>
+  <div class="cf" style="--x:12%;--c:#ff6a00;--d:11s;--l:-7s"></div>
+  <div class="cf" style="--x:20%;--c:#2de2c5;--d:8s;--l:-4s"></div>
+  <div class="cf" style="--x:28%;--c:#ff3d54;--d:10s;--l:-1s"></div>
+  <div class="cf" style="--x:36%;--c:#3c8dff;--d:12s;--l:-9s"></div>
+  <div class="cf" style="--x:44%;--c:#ffd23f;--d:9.5s;--l:-5s"></div>
+  <div class="cf" style="--x:52%;--c:#ff6a00;--d:8.5s;--l:-3s"></div>
+  <div class="cf" style="--x:60%;--c:#2de2c5;--d:11s;--l:-8s"></div>
+  <div class="cf" style="--x:68%;--c:#ff3d54;--d:9s;--l:-6s"></div>
+  <div class="cf" style="--x:76%;--c:#3c8dff;--d:10.5s;--l:-2.5s"></div>
+  <div class="cf" style="--x:84%;--c:#ffd23f;--d:8s;--l:-4.5s"></div>
+  <div class="cf" style="--x:92%;--c:#ff6a00;--d:12s;--l:-10s"></div>
+</div>
+
+<nav class="tabs">
+  <label for="pg1">Birthday</label>
+  <label for="pg2">Rooftop Squad</label>
+</nav>
+
+<main>
+
+<!-- ===================== PAGE 1 ===================== -->
+<section class="page p1">
+
+  <div class="hero">
+    <div class="crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="dot" aria-hidden="true"></div>
+    <div>
+      <p class="hb" aria-label="Happy Birthday">
+        <span class="w" aria-hidden="true"><span class="l" style="--i:0">H</span><span class="l" style="--i:1">A</span><span class="l" style="--i:2">P</span><span class="l" style="--i:3">P</span><span class="l" style="--i:4">Y</span></span>
+        <span class="w" aria-hidden="true"><span class="l" style="--i:5">B</span><span class="l" style="--i:6">I</span><span class="l" style="--i:7">R</span><span class="l" style="--i:8">T</span><span class="l" style="--i:9">H</span><span class="l" style="--i:10">D</span><span class="l" style="--i:11">A</span><span class="l" style="--i:12">Y</span></span>
+      </p>
+      <h1 class="name" data-t="AMAN">AMAN</h1>
+      <p class="sub">Legend of the roof. Champion of the squad.</p>
+    </div>
+    <div class="booyah" aria-hidden="true">BOOYAH!</div>
+  </div>
+
+  <!-- Gun firing at target -->
+  <div class="range" aria-hidden="true">
+    <div class="gun">
+      <b class="stock"></b><b class="gbody"></b><b class="scope"></b><b class="barrel"></b><b class="muzzle"></b><b class="mag"></b><b class="grip"></b><b class="shell"></b><b class="shell s2"></b>
+    </div>
+    <div class="lane">
+      <span class="flash"></span>
+      <span class="bullet"></span><span class="bullet"></span><span class="bullet"></span><span class="bullet"></span><span class="bullet"></span>
+    </div>
+    <div class="target"><span class="hit">HEADSHOT!</span></div>
+  </div>
+
+  <div class="wish">
+    <div class="cake" aria-hidden="true">
+      <i class="c"><u></u></i><i class="c"><u></u></i><i class="c"><u></u></i>
+      <div class="t2"></div><div class="t1"></div><div class="plate"></div>
+    </div>
+    <div class="hud">
+      <h2>Level up unlocked</h2>
+      <p>Today you get a new level, Aman. I'm wishing you unlimited health, endless ammo, zero lag and a lifetime of Booyahs. Have the best birthday ever, bro!</p>
+    </div>
+  </div>
+
+  <div class="hud">
+    <h2>Mission: Class 9 exams</h2>
+    <p>I know you're taking a lot of tension about studies. Listen to me, even the best players rest between matches. Study in small rounds, take a break, and trust yourself. You've got this, and I'll be right here, cheering.</p>
+    <div class="bars" aria-hidden="true">
+      <div class="bar"><span>Tension</span><div class="track"><span class="fill stress"></span></div></div>
+      <div class="bar"><span>Focus</span><div class="track"><span class="fill focus"></span></div></div>
+      <div class="bar"><span>Confidence</span><div class="track"><span class="fill conf"></span></div></div>
+    </div>
+  </div>
+
+  <div class="loot">
+    <div class="crate"><div><strong>25 min study</strong><span>Full focus, phone away</span></div></div>
+    <div class="crate" style="--l:-1s"><div><strong>5 min break</strong><span>Stretch and breathe</span></div></div>
+    <div class="crate" style="--l:-2s"><div><strong>Sleep on time</strong><span>Recharge your health</span></div></div>
+  </div>
+
+  <div class="btnrow"><label for="pg2" class="btn">Next: our rooftop squad</label></div>
+</section>
+
+<!-- ===================== PAGE 2 ===================== -->
+<section class="page p2">
+
+  <h2 class="title">Our Rooftop Squad</h2>
+  <p class="lead">Every evening from 6 to 9, on the 3rd floor roof, with two phones and one dream: a chicken dinner.</p>
+
+  <div class="scene" aria-hidden="true">
+    <div class="stars"></div><div class="stars b"></div>
+    <div class="moon"></div>
+    <div class="cloud"></div>
+    <div class="feed"><span>Aman eliminated 1</span><span>Headshot!</span><span>Squad wins. Booyah!</span></div>
+    <div class="badge3">3rd floor roof: our battleground</div>
+
+    <div class="crew">
+      <div class="pl aman">
+        <span class="tag">Aman</span><i class="head"></i><i class="torso"></i><i class="legs"></i><i class="phone"></i>
+        <span class="muz"></span><span class="tr"></span><span class="tr t2"></span><span class="tr t3"></span>
+      </div>
+      <div class="pl me">
+        <span class="tag">Me</span><i class="head"></i><i class="torso"></i><i class="legs"></i><i class="phone"></i>
+        <span class="muz"></span><span class="tr"></span><span class="tr t2"></span><span class="tr t3"></span>
+      </div>
+    </div>
+
+    <div class="house">
+      <div class="parapet"></div>
+      <div class="slab"></div>
+      <div class="floor f3"><i class="w" style="--k:0"></i><i class="w" style="--k:3"></i><i class="w" style="--k:1"></i><i class="w" style="--k:5"></i></div>
+      <div class="floor"><i class="w" style="--k:2"></i><i class="w" style="--k:4"></i><i class="w" style="--k:6"></i><i class="w" style="--k:1"></i></div>
+      <div class="floor"><i class="w" style="--k:5"></i><i class="w" style="--k:0"></i><i class="door"></i><i class="w" style="--k:3"></i></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Roof timing: 6 PM to 9 PM</h3>
+    <div class="clockrow">
+      <div class="clock" aria-hidden="true"><span>6:00 PM</span><span>7:00 PM</span><span>8:00 PM</span><span>9:00 PM</span></div>
+      <div class="rail" aria-hidden="true"><i class="prog"></i><b class="n n1"></b><b class="n n2"></b><b class="n n3"></b><b class="n n4"></b></div>
+    </div>
+    <ul class="steps">
+      <li><b>6 PM</b>Squad drops on the roof</li>
+      <li><b>7 PM</b>Ranked grind begins</li>
+      <li><b>8 PM</b>Clutch moments and loud screaming</li>
+      <li><b>9 PM</b>Booyah, then back home</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>The great Maggie war</h3>
+    <div class="arena" aria-hidden="true">
+      <div class="fighter L">😤<em>Aman</em></div>
+      <div class="pack"><b>MAGGIE</b><small>2 minutes</small></div>
+      <div class="fighter R">😠<em>Me</em></div>
+      <span class="steam"></span><span class="steam s2"></span><span class="steam s3"></span>
+      <span class="pow p1">POW!</span><span class="pow p2">BAM!</span><span class="pow p3">ZAP!</span>
+    </div>
+    <p class="cap">The rule was simple: whoever grabs the Maggie first, wins. The result was always the same. We fought for it, shouted about it, and then shared it anyway.</p>
+  </div>
+
+  <div class="hud final">
+    <span class="burst b1" aria-hidden="true"></span><span class="burst b2" aria-hidden="true"></span><span class="burst b3" aria-hidden="true"></span>
+    <h2>Happy Birthday, Aman!</h2>
+    <p>Class 9 is a big level, but you are a bigger player. Whatever the marks say, you have a friend and a whole roof full of memories that are always on your side.</p>
+    <p>Here's to more Booyahs, more Maggie and many, many more birthdays. See you on the roof at 6.</p>
+    <p class="sign">Your squadmate</p>
+  </div>
+
+  <div class="btnrow"><label for="pg1" class="btn">Back to the birthday page</label></div>
+</section>
+
+</main>
+</body>
+</html>
